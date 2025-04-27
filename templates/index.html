@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSV Dashboard Generator</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
@@ -14,20 +15,20 @@
             <form id="upload-form" enctype="multipart/form-data" class="mb-4">
                 <input type="file" name="file" id="file-input" accept=".csv" class="mb-2 p-2 border rounded">
                 <div class="mb-4">
-                    <label for="chart-type" class="block text-sm font-medium">Chart Type</label>
+                    <label for="chart-type" class="block text-sm font-medium">Chart Type (Optional)</label>
                     <select name="chart_type" id="chart-type" class="p-2 border rounded">
-                        <option value="">Default</option>
+                        <option value="">Auto-Detect</option>
                         <option value="scatter">Scatter</option>
                         <option value="bar">Bar</option>
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="x-column" class="block text-sm font-medium">X Column</label>
-                    <input type="text" name="x_column" id="x-column" class="p-2 border rounded" placeholder="Enter column name">
+                    <label for="x-column" class="block text-sm font-medium">X Column (Optional)</label>
+                    <input type="text" name="x_column" id="x-column" class="p-2 border rounded" placeholder="Leave blank for auto-detection">
                 </div>
                 <div class="mb-4">
-                    <label for="y-column" class="block text-sm font-medium">Y Column</label>
-                    <input type="text" name="y_column" id="y-column" class="p-2 border rounded" placeholder="Enter column name">
+                    <label for="y-column" class="block text-sm font-medium">Y Column (Optional)</label>
+                    <input type="text" name="y_column" id="y-column" class="p-2 border rounded" placeholder="Leave blank for auto-detection">
                 </div>
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Upload CSV</button>
             </form>
@@ -77,11 +78,12 @@
                 result.plots.forEach((plotJson, index) => {
                     const plotDiv = document.createElement('div');
                     plotDiv.id = `plot-${index}`;
+                    plotDiv.className = 'w-full h-96';
                     plotsDiv.appendChild(plotDiv);
-                    Plotly.newPlot(`plot-${index}`, JSON.parse(plotJson).data, JSON.parse(plotJson).layout);
+                    Plotly.newPlot(`plot-${index}`, JSON.parse(plotJson).data, JSON.parse(plotJson).layout, { responsive: true });
                 });
             } catch (error) {
-                errorMessage.textContent = 'An error occurred while processing the file';
+                errorMessage.textContent = 'An error occurred while processing the file: ' + error.message;
                 errorMessage.classList.remove('hidden');
             }
         });
