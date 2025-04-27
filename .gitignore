@@ -1,0 +1,48 @@
+# Python-specific
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.whl
+
+# Virtual environments
+venv/
+.env/
+env/
+.venv/
+
+# FastAPI/Uploads
+uploads/
+
+# Environment variables and secrets
+.env
+*.env
+*.secret
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+
+# Testing/Coverage
+.coverage
+coverage.xml
+*.cover
+.pytest_cache/
+
+# Miscellaneous
+*.bak
+*.swp
+*~
